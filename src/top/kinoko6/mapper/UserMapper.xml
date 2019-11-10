@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.kinoko6.mapper.UserMapper">
+	<update id="updateUserInfoMapper" parameterType="user" >
+			update T_user
+			<trim  prefix="set" suffixOverrides="," suffix=" where user_id = #{user_id} ">
+					user_id=#{user_id},
+				<if test="user_name!=null and user_name!=''">
+					user_name=#{user_name},
+				</if>
+				<if test="user_headphoto!=null and user_headphoto!=''">
+					user_headphoto=#{user_headphoto},
+				</if>
+				<if test="user_real_name!=null and user_real_name!=''">
+					user_real_name=#{user_real_name},
+				</if>
+				<if test="user_id_card!=null and user_id_card!=''">
+					user_id_card=#{user_id_card},
+				</if>
+				<if test="user_password!=null and user_password!=''">
+					user_password=#{user_password},
+				</if>
+				<if test="user_email!=null and user_email!=''">
+					user_email=#{user_email},
+				</if>	
+				<if test="user_sign!=null and user_sign!=''">
+					user_sign=#{user_sign},
+				</if>
+			</trim>
+	</update>
+	
+</mapper>
+

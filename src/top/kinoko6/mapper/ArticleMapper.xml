@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.kinoko6.mapper.ArticleMapper">
+	<select id="filterArticle" resultType="article">
+		select * from T_article 
+		
+			<where>
+				<if test="filterDate!=null">
+					<bind name="filterDate" value="filterDate+'%'"/>
+					and publish_date like #{filterDate}
+				</if>
+			
+				<if test="filterType!=null">
+					and type=#{filterType}
+				</if>
+					and user_id=#{authorId}
+			</where>
+			order by publish_date desc
+	</select>
+	
+	<select id="selectSelfArticlesByKeyWords" resultType="article">
+		select * from T_article 
+			<where>
+				<if test="KeyWord!=null">
+					<bind name="KeyWord" value="'%'+KeyWord+'%'"/>
+				</if>
+				and theme like #{KeyWord}
+				
+				and user_id=#{authorId}
+			</where>
+			order by publish_date desc
+	</select>
+
+
+	<update id="updateArticle"  >
+			update T_article
+			<trim  prefix="set" suffixOverrides="," suffix=" where id=#{articleId} ">
+				<if test="article.type!=null and article.type!=''">
+					type=#{article.type},
+				</if>
+				<if test="article.theme!=null and article.theme!=''">
+					theme=#{article.theme},
+				</if>
+				<if test="article.content!=null">
+					content=#{article.content},
+				</if>
+				<if test="article.concat!=null">
+					concat=#{article.concat},
+				</if>
+				<if test="article.price!=null">
+					price=#{article.price},
+				</if>
+				<if test="article.publish_date!=null">
+					publish_date=#{article.publish_date},
+				</if>
+			</trim>
+	</update>
+</mapper>
